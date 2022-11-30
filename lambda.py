@@ -21,7 +21,7 @@ print(point2D_sorted)
 # map(func, seq)
 #map function transforms each element with a function
 a = [1, 2, 3, 4, 5]
-b = map(lambda x:x*2, a) #creates an pbject that needs to be converted to a list
+b = map(lambda x:x*2, a) #creates an object that needs to be converted to a list
 print(list(b))
 c = [x*2 for x in a] #same as above and faster
 

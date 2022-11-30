@@ -1,5 +1,6 @@
 # a decorator takes another function as an argument and extends the behaviour of that function
 # there are function decorators and class decorators
+# debug decorator, timer decorator, number of calls decorator are examples
 import functools
 
 def start_end_decorator(func):
