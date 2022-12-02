@@ -5,7 +5,7 @@ import time
 database_value = 0
 
 def increase():
-    global database_value
+    global database_value #to share data between threads
     # dummy code, get database_value and make a local copy
     local_copy = database_value
     # processing that take time
@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     for i in range(num_threads):
         t = Thread(name=f"Thread{i+1}", target=worker, args=(q, lock))
-        t.daemon = True  # dies when the main thread dies
+        t.daemon = True  # dies when the main thread dies so it is not stuck in while loopgit a
         t.start()
     
     # fill the queue with items
@@ -108,44 +108,3 @@ if __name__ == '__main__':
     q.join()  # Blocks until all items in the queue have been gotten and processed.
 
     print('main done')
-
-
-
-
-
-
-from threading import Thread, Lock, current_thread
-from queue import Queue 
-import time
-
-def worker(q):
-    while True:
-        value = q.get() #will block and wait until items are available
-        # processing..
-        print(f'in {current_thread().name} got {value}')
-        q.task_done() #must be used in threading
-
-if __name__ == "__main__":        
-    q = Queue()
-    num_threads = 10
-    for i in range(num_threads):
-        thread = Thread(target=worker, args=(q,))
-        thread.deamon=True
-        thread.start()
-
-    for i in range(1,20): #filling our queue with elements
-        q.put(i)
-
-    q.join() 
-
-    # q.put(1)
-    # q.put(2)
-    # q.put(3)
-    # # 3 2 1 -->
-    # first = q.get() #get and removes the first item, which is 1 in this case
-    # #when using get method in multithreading environment use q.task_done()
-    # #q.join() #blocks until all items in the queue are gotten and processed
-    # print(first)
-    # q.empty() #returns true if queue is empty
-
-    print('end main')
